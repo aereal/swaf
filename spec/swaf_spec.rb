@@ -1,4 +1,4 @@
-# encoding: utf-8
+# encoding: ASCII-8BIT
 
 require "pathname"
 require "swaf"
@@ -18,6 +18,11 @@ describe Swaf do
 
 	it "has header of SWF" do
 		subject.header.should == swf_dumper.header
+	end
+
+	it "replace ActionScript variable with specified value" do
+		subject.replace(:_itemname => 'fugafuga').swf.should ==
+			(prefix + 'samples/replaced_as_var.swf').binread
 	end
 end
 

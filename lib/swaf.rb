@@ -1,7 +1,12 @@
-# encoding: utf-8
+# encoding: ASCII-8BIT
 
 require "forwardable"
 require "swf_ruby"
+
+[:DoActionDumper, :ReplaceTarget, :Jpeg2ReplaceTarget, :SpriteReplaceTarget,
+:Lossless2ReplaceTarget, :AsVarReplaceTarget, :SpriteDumper, :SwfTamperer].each do |k|
+	SwfRuby.const_set(k.to_s.gsub(/[a-z]+/, ''), SwfRuby.const_get(k))
+end
 
 require "swaf/version"
 
@@ -27,10 +32,23 @@ class Swaf
 
 	def initialize
 		@dumper = SwfRuby::SwfDumper.new
+		@tamperer = SwfRuby::ST.new
 	end
 
 	def load!(swf)
 		self.dumper.dump(swf)
+	end
+
+	def replace(params={})
+		self.class.load(@tamperer.replace(
+			@dumper.swf,
+			params.map {|name, value| [name.to_s, value] }.
+			inject([]) {|targets, (name, value)|
+				SwfRuby::AVRT.build_by_var_name(@dumper, name).each {|t|
+					t.str = value
+				}
+			}
+		))
 	end
 end
 
