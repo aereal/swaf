@@ -56,5 +56,11 @@ class Swaf
 			@dumper.tags_addresses[t[1]]
 		end
 	end
+
+	def replace_jpeg(params={})
+		self.class.load(@tamperer.replace(@dumper.swf, params.map {|id, value|
+			SwfRuby::J2RT.new(detect(id), value)
+		}))
+	end
 end
 

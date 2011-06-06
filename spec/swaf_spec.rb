@@ -32,5 +32,22 @@ describe Swaf do
 			subject.detect(1).should == jpg_offset
 		end
 	end
+
+	context "when replacing objects" do
+		let(:jpeg_replaced_swf) {
+			(prefix + 'samples' + 'jpeg_replaced.swf').open('rb:ASCII-8BIT') {|f|
+				f.read
+			}
+		}
+		let(:new_image) {
+			(prefix + 'samples' + 'another_fig.jpg').open('rb:ASCII-8BIT') {|f|
+				f.read
+			}
+		}
+
+		it "replace JPEG images with specified JPEG image" do
+			subject.replace_jpeg(1 => new_image).swf.should == jpeg_replaced_swf
+		end
+	end
 end
 
