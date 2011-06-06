@@ -31,7 +31,7 @@ describe Swaf do
 		}
 
 		it "replace JPEG images with specified JPEG image" do
-			subject.replace_jpeg(1 => new_image).swf.should == jpeg_replaced_swf
+			subject.replace(1 => new_image).swf.should == jpeg_replaced_swf
 		end
 
 		it "replace value of ActionScript's variable with specified value" do

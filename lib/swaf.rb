@@ -39,7 +39,38 @@ class Swaf
 		self.dumper.dump(swf)
 	end
 
+	def detect(id)
+		if t = @dumper.tags.each_with_index.find {|t, i| t.character_id == id }
+			@dumper.tags_addresses[t[1]]
+		end
+	end
+	alias_method :find, :detect
+
 	def replace(params={})
+		self.class.load(@tamperer.replace(@dumper.swf, params.inject([]) {|targets, (k, v)|
+			targets << make_target(k, v)
+		}))
+	end
+
+	private
+	def make_target(key, value)
+		case key
+		when Symbol
+			SwfRuby::AsVarReplaceTarget.build_by_var_name(@dumper, key.to_s).each {|t|
+				t.str = value
+			}.first
+		when Integer
+			SwfRuby::Jpeg2ReplaceTarget.new(detect(key), value)
+		end
+	end
+
+	def replace_jpeg(params={})
+		self.class.load(@tamperer.replace(@dumper.swf, params.map {|id, value|
+			SwfRuby::J2RT.new(detect(id), value)
+		}))
+	end
+
+	def replace_string(params={})
 		self.class.load(@tamperer.replace(
 			@dumper.swf,
 			params.map {|name, value| [name.to_s, value] }.
@@ -49,19 +80,6 @@ class Swaf
 				}
 			}
 		))
-	end
-
-	def detect(id)
-		if t = @dumper.tags.each_with_index.find {|t, i| t.character_id == id }
-			@dumper.tags_addresses[t[1]]
-		end
-	end
-	alias_method :find, :detect
-
-	def replace_jpeg(params={})
-		self.class.load(@tamperer.replace(@dumper.swf, params.map {|id, value|
-			SwfRuby::J2RT.new(detect(id), value)
-		}))
 	end
 end
 
