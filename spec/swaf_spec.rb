@@ -25,14 +25,11 @@ describe Swaf do
 			(prefix + 'samples/replaced_as_var.swf').binread
 	end
 
-	context "when detecting JPEG images" do
-		let(:sample_jpg) {
-			(prefix + 'samples' + 'fig.jpg').open('rb:ASCII-8BIT') {|f| f.read }
-		}
+	context "when detecting tags" do
+		let(:jpg_offset) { 1370 }
 
-		it "detect a image by ID" do
-			#subject.find_jpeg(1).should == sample_jpg
-			pending
+		it "detect a offset of a JPEG image by ID" do
+			subject.detect(1).should == jpg_offset
 		end
 	end
 end

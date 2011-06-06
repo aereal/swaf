@@ -51,9 +51,9 @@ class Swaf
 		))
 	end
 
-	def find_jpeg(id)
-		if tag = @dumper.tags.find {|t| t.character_id == id }
-			tag.data.sub(/\xff\xd9\xff\xd8/, '')
+	def detect(id)
+		if t = @dumper.tags.each_with_index.find {|t, i| t.character_id == id }
+			@dumper.tags_addresses[t[1]]
 		end
 	end
 end
