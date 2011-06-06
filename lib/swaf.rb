@@ -56,6 +56,7 @@ class Swaf
 			@dumper.tags_addresses[t[1]]
 		end
 	end
+	alias_method :find, :detect
 
 	def replace_jpeg(params={})
 		self.class.load(@tamperer.replace(@dumper.swf, params.map {|id, value|
