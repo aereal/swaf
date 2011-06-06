@@ -4,6 +4,7 @@ require "forwardable"
 require "swf_ruby"
 
 require "swaf/version"
+require "swaf/helper"
 
 class Swaf
 	extend Forwardable
@@ -55,7 +56,14 @@ class Swaf
 				t.str = value
 			}.first
 		when Integer
-			SwfRuby::Jpeg2ReplaceTarget.new(detect(key), value)
+			case value.first
+			when :jpeg
+				SwfRuby::Jpeg2ReplaceTarget.new(detect(key), value.last)
+			when :gif, :png
+				SwfRuby::Lossless2ReplaceTarget(detect(key), value.last)
+			when :movie
+				# TODO
+			end
 		end
 	end
 end

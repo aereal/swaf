@@ -24,14 +24,14 @@ describe Swaf do
 			(prefix + 'samples' + 'jpeg_replaced.swf').binread
 		}
 		let(:new_image) {
-			(prefix + 'samples' + 'another_fig.jpg').binread
+			prefix + 'samples' + 'another_fig.jpg'
 		}
 		let(:as_var_replaced_swf) {
 			(prefix + 'samples' + 'replaced_as_var.swf').binread
 		}
 
 		it "replace JPEG images with specified JPEG image" do
-			subject.replace(1 => new_image).swf.should == jpeg_replaced_swf
+			subject.replace(1 => jpeg(new_image))
 		end
 
 		it "replace value of ActionScript's variable with specified value" do
