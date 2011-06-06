@@ -20,7 +20,7 @@ describe Swaf do
 		subject.header.should == swf_dumper.header
 	end
 
-	it "replace ActionScript variable with specified value" do
+	it "replace value of ActionScript's variable with specified value" do
 		subject.replace(:_itemname => 'fugafuga').swf.should ==
 			(prefix + 'samples/replaced_as_var.swf').binread
 	end
