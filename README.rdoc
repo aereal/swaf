@@ -1,0 +1,57 @@
+= swaf
+
+== Description
+
+more user-friendly interface for {swf_ruby}[https://github.com/tmtysk/swf_ruby]
+
+== Installation
+
+	% gem install swaf
+
+== Usage
+
+=== Replace images
+
+	require "rubygems"
+	require "swaf"
+
+	src = Swaf.load_file("swf/my.swf")
+	image_replaced = src.replace(1 => jpeg("images/moon.jpg"))
+	File.open("swf/image_replaced.swf", "wb") do |f|
+		f << image_replaced
+	end
+
+`Swaf#replace` method takes `Hash` object which key is ID in SWF and value is file of destination.
+
+=== Replace movie-clips
+
+	require "rubygems"
+	require "swaf"
+
+	src = Swaf.load_file("swf/my.swf")
+	movie_replaced = src.replace(:_mymovie => movie("swf/greeting.swf"))
+	File.open("swf/movie_replaced.swf", "wb") do |f|
+		f << movie_replaced
+	end
+
+`Swaf#replace` method takes `Hash` object which key is instance name and value is file of destination.
+
+=== Replace value of ActionScript variable
+
+	require "rubygems"
+	require "swaf"
+
+	src = Swaf.load_file("swf/my.swf")
+	var_replaced = src.replace(:_name => "Foobar")
+	File.open("swf/var_replaced.swf", "wb") do |f|
+		f << var_replaced
+	end
+
+`Swaf#replace` method takes `Hash` object which key is variable name and value is value of description.
+
+== Copyright
+
+[Copyright] Copyright (c) 2011 AOKI,Hanae
+[Author] AOKI,Hanae (aereal, trasty.loose@gmail.com)
+[License] MIT License
+
