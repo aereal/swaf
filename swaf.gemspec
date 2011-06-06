@@ -7,9 +7,8 @@ Gem::Specification.new do |s|
 	s.version     = Swaf::VERSION
 	s.authors     = ["aereal"]
 	s.email       = ["trasty.loose@gmail.com"]
-	s.homepage    = ""
-	s.summary     = %q{TODO: Write a gem summary}
-	s.description = %q{TODO: Write a gem description}
+	s.homepage    = "https://github.com/aereal/swaf"
+	s.summary     = %q{more user-friendly interface for swf_ruby}
 
 	s.files         = `git ls-files`.split("\n")
 	s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
@@ -23,7 +22,7 @@ Gem::Specification.new do |s|
 	}
 
 	runtime_deps = {
-		#'swf_ruby' => '>= 0.2.0'
+		'swf_ruby' => '>= 0.2.0'
 	}
 
 	if s.respond_to? :add_runtime_dependency
