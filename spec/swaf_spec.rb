@@ -37,6 +37,10 @@ describe Swaf do
 		it "replace value of ActionScript's variable with specified value" do
 			subject.replace(:_itemname => 'fugafuga').swf.should == as_var_replaced_swf
 		end
+
+		it "replace movie-clips with specified ones" do
+			pending
+		end
 	end
 end
 

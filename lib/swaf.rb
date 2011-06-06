@@ -52,17 +52,21 @@ class Swaf
 	def make_target(key, value)
 		case key
 		when Symbol
-			SwfRuby::AsVarReplaceTarget.build_by_var_name(@dumper, key.to_s).each {|t|
-				t.str = value
-			}.first
+			if value.kind_of?(Array) && value.size == 2 # movie-clip
+				SwfRuby::SpriteReplaceTarget.build_list_by_instance_var_names(
+					@dumper, key.to_s => value
+				).first
+			else
+				SwfRuby::AsVarReplaceTarget.build_by_var_name(@dumper, key.to_s).each {|t|
+					t.str = value
+				}.first
+			end
 		when Integer
 			case value.first
 			when :jpeg
 				SwfRuby::Jpeg2ReplaceTarget.new(detect(key), value.last)
 			when :gif, :png
 				SwfRuby::Lossless2ReplaceTarget(detect(key), value.last)
-			when :movie
-				# TODO
 			end
 		end
 	end

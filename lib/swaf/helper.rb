@@ -14,5 +14,9 @@ module ::Kernel
 	def gif(file)
 		[:gif, File.binread(file)]
 	end
+
+	def movie(file)
+		[:movie, File.binread(file)]
+	end
 end
 
