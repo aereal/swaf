@@ -24,5 +24,16 @@ describe Swaf do
 		subject.replace(:_itemname => 'fugafuga').swf.should ==
 			(prefix + 'samples/replaced_as_var.swf').binread
 	end
+
+	context "when detecting JPEG images" do
+		let(:sample_jpg) {
+			(prefix + 'samples' + 'fig.jpg').open('rb:ASCII-8BIT') {|f| f.read }
+		}
+
+		it "detect a image by ID" do
+			#subject.find_jpeg(1).should == sample_jpg
+			pending
+		end
+	end
 end
 
